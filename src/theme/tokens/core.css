@@ -1,0 +1,93 @@
+:root {
+    /* core */
+    --background: #FFFFFF;
+    --foreground: #17171B;
+
+    --card: #FFFFFF;
+    --card-foreground: #3F3F46;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #3F3F46;
+
+    --primary: #131315;
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #F8F8F8;
+    --secondary-foreground: #33373D;
+
+    --tertiary: #1CB167;
+    --tertiary-foreground: #FFFFFF;
+
+    --muted: #F9FAFB;
+    --muted-foreground: #35353B;
+    /* not in Figma JSON */
+    --muted-hover: #ebebeb;
+
+    --accent: #ECECEC;
+    --accent-foreground: #373737;
+
+    /*
+     * Status colors. Figma's source values (red-500 / green-600 / amber-600 / sky-600)
+     * fail WCAG AA 4.5:1 against white and against their -foreground companions.
+     * We darken each to the next Tailwind shade (-700/-800) so all default pairings
+     * pass AA. Hue is preserved; only luminance changes. Flag for UX whether to
+     * sync these darker values back into Figma.
+     */
+    /* WCAG AA: 6.47:1 on white; 5.30:1 on --destructive-foreground; 5.45:1 on bg-destructive/10 */
+    --destructive: #B91C1C;
+    --destructive-foreground: #FEE2E2;
+
+    /* WCAG AA: 7.13:1 on white; 5.53:1 on --success-foreground */
+    --success: #166534;
+    --success-foreground: #CBEAD7;
+
+    /* WCAG AA: 5.02:1 on white; 4.68:1 on --warning-foreground */
+    --warning: #B45309;
+    --warning-foreground: #FEF9C3;
+
+    /* WCAG AA: 5.93:1 on white; 4.86:1 on --info-foreground */
+    --info: #0369A1;
+    --info-foreground: #DBEAFE;
+
+    --border: #9CA3AF;
+    --border-subtle: #D1D5DB;
+    /* not in Figma JSON for light mode (Figma only defines `input` in dark) */
+    --input: #e8e8e8;
+    /* 3.66:1 on #FFFFFF — meets WCAG SC 1.4.11 (3:1 for graphics); use for focus rings only,
+       not as text color on white. */
+    --ring: #3B82F6;
+
+    /* not in Figma JSON */
+    --separator: rgba(0, 0, 0, 0.08);
+    --separator-foreground: #9e9e9e;
+
+    /* not in Figma JSON */
+    --rating: #facc15;
+    --rating-foreground: #ffffff;
+
+    /*
+     * The aliases below inherit the WCAG-AA-passing values of their parent tokens.
+     */
+    /* not in Figma JSON: review-verified badge — semantic alias of --success* (5.53:1) */
+    --review-verified-bg: var(--success-foreground);
+    --review-verified-text: var(--success);
+
+    /* not in Figma JSON: selected filter chip — semantic alias of --info* (4.86:1) */
+    --filter-selected: var(--info-foreground);
+    --filter-selected-border: var(--info);
+
+    /* generic opacity helpers */
+    --opacity-90: 10%;
+    --opacity-80: 20%;
+    --opacity-50: 50%;
+    --opacity-30: 70%;
+
+    [role="radio"]:not([data-labeled]) {
+        min-width: var(--swatch-pill-size);
+        min-height: var(--swatch-pill-size);
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}

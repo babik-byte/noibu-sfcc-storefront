@@ -1,0 +1,100 @@
+@font-face {
+    font-family: 'Sen';
+    src: url('/fonts/sen-variable.woff2') format('woff2');
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer components {
+    .section-container {
+        @apply px-4 sm:px-8 lg:px-16 max-w-screen-2xl mx-auto;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-family: var(--font-sans);
+    }
+
+    /* Cursor pointer for all interactive elements */
+    button:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]):not([data-disabled]),
+    [role="tab"]:not([aria-disabled="true"]):not([data-disabled]),
+    a[href],
+    select:not(:disabled),
+    input[type="button"]:not(:disabled),
+    input[type="submit"]:not(:disabled),
+    input[type="reset"]:not(:disabled),
+    input[type="date"]:not(:disabled),
+    input[type="datetime-local"]:not(:disabled),
+    input[type="month"]:not(:disabled),
+    input[type="time"]:not(:disabled),
+    input[type="week"]:not(:disabled),
+    input[type="color"]:not(:disabled),
+    input[type="file"]:not(:disabled),
+    summary {
+        cursor: pointer;
+    }
+
+    /* Cursor not-allowed for disabled interactive elements */
+    button:disabled,
+    [role="button"][aria-disabled="true"],
+    [role="button"][data-disabled],
+    [role="tab"][aria-disabled="true"],
+    [role="tab"][data-disabled],
+    select:disabled,
+    input[type="button"]:disabled,
+    input[type="submit"]:disabled,
+    input[type="reset"]:disabled,
+    input[type="date"]:disabled,
+    input[type="datetime-local"]:disabled,
+    input[type="month"]:disabled,
+    input[type="time"]:disabled,
+    input[type="week"]:disabled,
+    input[type="color"]:disabled,
+    input[type="file"]:disabled {
+        cursor: not-allowed;
+    }
+}
+
+/*
+ * Square corners for all shadcn/ui primitives to match the design system.
+ * This overrides the default rounded classes in shadcn components without
+ * modifying their source files and maintain Shadcn components code intact from cli generated.
+   Placed outside @layer so it takes precedence
+ * over Tailwind utility classes. Customers who want rounded corners can
+ * remove this block or override per-component via className.
+ */
+[data-slot="accordion-trigger"],
+[data-slot="alert"],
+[data-slot="alert-dialog-content"],
+[data-slot="button"],
+[data-slot="card"],
+[data-slot="dialog-content"],
+[data-slot="dialog-close"],
+[data-slot="dropdown-menu-content"],
+[data-slot="dropdown-menu-item"],
+[data-slot="dropdown-menu-checkbox-item"],
+[data-slot="dropdown-menu-radio-item"],
+[data-slot="dropdown-menu-sub-trigger"],
+[data-slot="dropdown-menu-sub-content"],
+[data-slot="input"],
+[data-slot="input-otp-slot"],
+[data-slot="native-select"],
+[data-slot="navigation-menu-trigger"],
+[data-slot="navigation-menu-content"],
+[data-slot="navigation-menu-viewport"],
+[data-slot="navigation-menu-link"],
+[data-slot="popover-content"],
+[data-slot="popover-trigger"],
+[data-slot="sheet-close"],
+[data-slot="skeleton"],
+[data-slot="textarea"],
+[data-slot="tooltip-content"] {
+    border-radius: 0;
+}

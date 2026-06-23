@@ -1,0 +1,964 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DynamicImage stories snapshot > AllBorderRadiusVariants story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="grid grid-cols-2 gap-4 w-full max-w-2xl"
+  >
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        None
+      </p>
+      <div
+        class=""
+      >
+        <img
+          alt="None"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Small
+      </p>
+      <div
+        class="rounded-sm overflow-hidden"
+      >
+        <img
+          alt="Small"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Medium
+      </p>
+      <div
+        class="rounded-md overflow-hidden"
+      >
+        <img
+          alt="Medium"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Large
+      </p>
+      <div
+        class="rounded-lg overflow-hidden"
+      >
+        <img
+          alt="Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Extra Large
+      </p>
+      <div
+        class="rounded-xl overflow-hidden"
+      >
+        <img
+          alt="Extra Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        2X Large
+      </p>
+      <div
+        class="rounded-2xl overflow-hidden"
+      >
+        <img
+          alt="2X Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > AllHoverEffects story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="grid grid-cols-2 gap-4 w-full max-w-2xl"
+  >
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Scale
+      </p>
+      <div
+        class="rounded-md overflow-hidden hover:scale-105 transition-transform"
+      >
+        <img
+          alt="Scale"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Opacity
+      </p>
+      <div
+        class="rounded-md overflow-hidden hover:opacity-90 transition-opacity"
+      >
+        <img
+          alt="Opacity"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Shadow
+      </p>
+      <div
+        class="rounded-md overflow-hidden hover:shadow-lg transition-shadow"
+      >
+        <img
+          alt="Shadow"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Brightness
+      </p>
+      <div
+        class="rounded-md overflow-hidden hover:brightness-110 transition-all"
+      >
+        <img
+          alt="Brightness"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > AllObjectFitVariants story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="grid grid-cols-2 gap-4 w-full max-w-2xl"
+  >
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Contain
+      </p>
+      <div
+        class="w-full h-48 bg-gray-100"
+      >
+        <div
+          class="rounded-md overflow-hidden w-full h-full"
+        >
+          <img
+            alt="Contain"
+            class="object-contain"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=Contain"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Cover
+      </p>
+      <div
+        class="w-full h-48 bg-gray-100"
+      >
+        <div
+          class="rounded-md overflow-hidden w-full h-full"
+        >
+          <img
+            alt="Cover"
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=Cover"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Fill
+      </p>
+      <div
+        class="w-full h-48 bg-gray-100"
+      >
+        <div
+          class="rounded-md overflow-hidden w-full h-full"
+        >
+          <img
+            alt="Fill"
+            class="object-fill"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=Fill"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        None
+      </p>
+      <div
+        class="w-full h-48 bg-gray-100"
+      >
+        <div
+          class="rounded-md overflow-hidden w-full h-full"
+        >
+          <img
+            alt="None"
+            class="object-none"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=None"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Scale Down
+      </p>
+      <div
+        class="w-full h-48 bg-gray-100"
+      >
+        <div
+          class="rounded-md overflow-hidden w-full h-full"
+        >
+          <img
+            alt="Scale Down"
+            class="object-scale-down"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=ScaleDown"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > AllShadowVariants story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="grid grid-cols-2 gap-8 w-full max-w-2xl"
+  >
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        None
+      </p>
+      <div
+        class="rounded-md overflow-hidden"
+      >
+        <img
+          alt="None"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Small
+      </p>
+      <div
+        class="rounded-md overflow-hidden shadow-sm"
+      >
+        <img
+          alt="Small"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Medium
+      </p>
+      <div
+        class="rounded-md overflow-hidden shadow-md"
+      >
+        <img
+          alt="Medium"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Large
+      </p>
+      <div
+        class="rounded-md overflow-hidden shadow-lg"
+      >
+        <img
+          alt="Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        Extra Large
+      </p>
+      <div
+        class="rounded-md overflow-hidden shadow-xl"
+      >
+        <img
+          alt="Extra Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        class="text-sm mb-2"
+      >
+        2X Large
+      </p>
+      <div
+        class="rounded-md overflow-hidden shadow-2xl"
+      >
+        <img
+          alt="2X Large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/400"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > BrightnessHoverEffect story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-md overflow-hidden hover:brightness-110 transition-all"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Hover for brightness"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > CircularImage story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-64 h-64"
+  >
+    <div
+      class="rounded-full overflow-hidden w-full h-full"
+    >
+      <img
+        alt="Circular image"
+        class="object-cover"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/400x400/4A90E2/FFFFFF?text=Circle"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > Default story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        sizes="1200px"
+        srcset="https://via.placeholder.com/800?sw=1200&q=60 1200w, https://via.placeholder.com/800?sw=2400&q=60 2400w"
+        type="image/webp"
+      />
+      <source
+        media="(min-width: 640px)"
+        sizes="800px"
+        srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+        type="image/webp"
+      />
+      <source
+        sizes="400px"
+        srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+        type="image/webp"
+      />
+      <img
+        alt="Example image"
+        class="object-cover"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/800"
+      />
+    </picture>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > FullyCustomized story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-xl overflow-hidden shadow-2xl p-3 m-2 hover:scale-105 transition-transform bg-white"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Premium image"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > HighPriority story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        sizes="1200px"
+        srcset="https://via.placeholder.com/800?sw=1200&q=60 1200w, https://via.placeholder.com/800?sw=2400&q=60 2400w"
+        type="image/webp"
+      />
+      <source
+        media="(min-width: 640px)"
+        sizes="800px"
+        srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+        type="image/webp"
+      />
+      <source
+        sizes="400px"
+        srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+        type="image/webp"
+      />
+      <img
+        alt="High priority image"
+        class="object-cover"
+        fetchpriority="high"
+        loading="eager"
+        src="https://via.placeholder.com/800"
+      />
+    </picture>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > ObjectFitContain story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96 h-96 bg-gray-100"
+  >
+    <div
+      class="w-full h-full"
+    >
+      <img
+        alt="Object fit contain"
+        class="object-contain"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=Contain"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > ObjectFitCover story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96 h-64 bg-gray-100"
+  >
+    <div
+      class="w-full h-full"
+    >
+      <img
+        alt="Object fit cover"
+        class="object-cover"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/800x600/4A90E2/FFFFFF?text=Cover"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > OpacityHoverEffect story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-md overflow-hidden hover:opacity-90 transition-opacity"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Hover for opacity"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > RoundedCorners story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-lg overflow-hidden"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Rounded image"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > ScaleHoverEffect story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-md overflow-hidden shadow-md hover:scale-105 transition-transform"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Hover to scale"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > ShadowHoverEffect story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-md overflow-hidden hover:shadow-lg transition-shadow"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Hover for shadow"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > WithCustomComponent story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="bg-muted rounded-none p-4"
+  >
+    <picture>
+      <source
+        media="(min-width: 640px)"
+        sizes="800px"
+        srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+        type="image/webp"
+      />
+      <source
+        sizes="400px"
+        srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+        type="image/webp"
+      />
+      <div
+        alt="Custom component example"
+        class="object-cover"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/800"
+      />
+    </picture>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > WithMargin story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="flex gap-0 bg-gray-100 p-4"
+  >
+    <div
+      class="w-48"
+    >
+      <div
+        class="rounded-md overflow-hidden m-2"
+      >
+        <picture>
+          <source
+            media="(min-width: 640px)"
+            sizes="400px"
+            srcset="https://via.placeholder.com/400?sw=400&q=60 400w, https://via.placeholder.com/400?sw=800&q=60 800w"
+            type="image/webp"
+          />
+          <source
+            sizes="200px"
+            srcset="https://via.placeholder.com/400?sw=200&q=60 200w, https://via.placeholder.com/400?sw=400&q=60 400w"
+            type="image/webp"
+          />
+          <img
+            alt="Image 1"
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/400"
+          />
+        </picture>
+      </div>
+    </div>
+    <div
+      class="w-48"
+    >
+      <div
+        class="rounded-md overflow-hidden m-2"
+      >
+        <picture>
+          <source
+            media="(min-width: 640px)"
+            sizes="400px"
+            srcset="https://via.placeholder.com/400?sw=400&q=60 400w, https://via.placeholder.com/400?sw=800&q=60 800w"
+            type="image/webp"
+          />
+          <source
+            sizes="200px"
+            srcset="https://via.placeholder.com/400?sw=200&q=60 200w, https://via.placeholder.com/400?sw=400&q=60 400w"
+            type="image/webp"
+          />
+          <img
+            alt="Image 2"
+            class="object-cover"
+            fetchpriority="auto"
+            loading="lazy"
+            src="https://via.placeholder.com/400"
+          />
+        </picture>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > WithObjectWidths story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class=""
+  >
+    <picture>
+      <source
+        media="(min-width: 1024px)"
+        sizes="1200px"
+        srcset="https://via.placeholder.com/800?sw=1200&q=60 1200w, https://via.placeholder.com/800?sw=2400&q=60 2400w"
+        type="image/webp"
+      />
+      <source
+        media="(min-width: 768px)"
+        sizes="800px"
+        srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+        type="image/webp"
+      />
+      <source
+        media="(min-width: 640px)"
+        sizes="600px"
+        srcset="https://via.placeholder.com/800?sw=600&q=60 600w, https://via.placeholder.com/800?sw=1200&q=60 1200w"
+        type="image/webp"
+      />
+      <source
+        sizes="400px"
+        srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+        type="image/webp"
+      />
+      <img
+        alt="Object widths example"
+        class="object-cover"
+        fetchpriority="auto"
+        loading="lazy"
+        src="https://via.placeholder.com/800"
+      />
+    </picture>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > WithPadding story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96 bg-gray-100"
+  >
+    <div
+      class="rounded-md overflow-hidden p-4"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Padded image"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DynamicImage stories snapshot > WithShadow story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="w-96"
+  >
+    <div
+      class="rounded-md overflow-hidden shadow-xl"
+    >
+      <picture>
+        <source
+          media="(min-width: 640px)"
+          sizes="800px"
+          srcset="https://via.placeholder.com/800?sw=800&q=60 800w, https://via.placeholder.com/800?sw=1600&q=60 1600w"
+          type="image/webp"
+        />
+        <source
+          sizes="400px"
+          srcset="https://via.placeholder.com/800?sw=400&q=60 400w, https://via.placeholder.com/800?sw=800&q=60 800w"
+          type="image/webp"
+        />
+        <img
+          alt="Shadow image"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://via.placeholder.com/800"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,474 @@
+/**
+ * Copyright 2026 Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { createRoutesStub } from 'react-router';
+import type { ShopperOrders, ShopperStores } from '@/scapi';
+import { getTranslation } from '@salesforce/storefront-next-runtime/i18n';
+import { AllProvidersWrapper } from '@/test-utils/context-provider';
+import OrderConfirmationPage, { loader, ErrorBoundary } from './_app.order-confirmation.$orderNo';
+
+const { t } = getTranslation();
+
+// --- Server-side mocks (these cannot run in jsdom) ---
+
+vi.mock('@/lib/api/order.server', () => ({
+    fetchOrderWithProducts: vi.fn(),
+}));
+
+vi.mock('@/lib/logger.server', () => ({
+    getLogger: vi.fn(() => ({
+        error: vi.fn(),
+        warn: vi.fn(),
+        info: vi.fn(),
+        debug: vi.fn(),
+    })),
+}));
+
+vi.mock('@/providers/basket', () => ({
+    useBasketReset: () => vi.fn(),
+}));
+
+vi.mock('@/lib/api/customer.server', () => ({
+    isRegisteredCustomer: vi.fn(() => false),
+}));
+
+vi.mock('@salesforce/storefront-next-runtime/data-store', () => ({
+    getLoginPreferences: vi.fn(() => ({ emailVerificationEnabled: false })),
+}));
+
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+vi.mock('@/extensions/bopis/lib/api/stores.server', () => ({
+    fetchStoresForOrder: vi.fn(),
+}));
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
+
+import { fetchOrderWithProducts } from '@/lib/api/order.server';
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+import { fetchStoresForOrder } from '@/extensions/bopis/lib/api/stores.server';
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
+
+// --- Test data ---
+
+const baseOrder: ShopperOrders.schemas['Order'] = {
+    orderNo: 'TEST-ORDER-12345',
+    status: 'new',
+    orderTotal: 150.0,
+    productTotal: 100.0,
+    productSubTotal: 100.0,
+    shippingTotal: 10.0,
+    taxTotal: 8.5,
+    currency: 'USD',
+    customerInfo: {
+        email: 'test@example.com',
+        firstName: 'John',
+    },
+    billingAddress: {
+        fullName: 'John Doe',
+        firstName: 'John',
+        address1: '123 Main St',
+        city: 'San Francisco',
+        stateCode: 'CA',
+        postalCode: '94105',
+        countryCode: 'US',
+    },
+    shipments: [
+        {
+            shipmentId: 'shipment-123',
+            shippingAddress: {
+                fullName: 'John Doe',
+                address1: '123 Main St',
+                city: 'San Francisco',
+                stateCode: 'CA',
+                postalCode: '94105',
+                countryCode: 'US',
+            },
+            shippingMethod: { id: 'standard', name: 'Standard Shipping' },
+        },
+    ],
+    paymentInstruments: [
+        {
+            paymentCard: { cardType: 'Visa', numberLastDigits: '1234' },
+        },
+    ],
+    productItems: [
+        {
+            itemId: 'item1',
+            productId: 'product1',
+            productName: 'Checked Silk Tie',
+            quantity: 1,
+            basePrice: 50.0,
+            price: 50.0,
+            priceAfterItemDiscount: 50.0,
+            priceAfterOrderDiscount: 50.0,
+        },
+    ],
+};
+
+// @sfdc-extension-block-start SFDC_EXT_BOPIS
+const mockStore: ShopperStores.schemas['Store'] = {
+    id: 'store-123',
+    name: 'Test Store',
+    address1: '456 Store Ave',
+    city: 'San Francisco',
+    stateCode: 'CA',
+    postalCode: '94105',
+    phone: '555-1234',
+    email: 'store@example.com',
+};
+
+const mockStoresByStoreId = new Map<string, ShopperStores.schemas['Store']>([['store-123', mockStore]]);
+// @sfdc-extension-block-end SFDC_EXT_BOPIS
+
+// --- Helpers ---
+
+function renderRoute(order: ShopperOrders.schemas['Order']) {
+    const Stub = createRoutesStub([
+        {
+            path: '/order-confirmation/:orderNo',
+            Component: OrderConfirmationPage,
+            loader: () => ({
+                orderData: Promise.resolve({
+                    order,
+                    productsById: {},
+                    storesByStoreId: new Map(),
+                }),
+                showPostOrderRegistration: false,
+            }),
+        },
+    ]);
+
+    return render(
+        <AllProvidersWrapper>
+            <Stub initialEntries={[`/order-confirmation/${order.orderNo}`]} />
+        </AllProvidersWrapper>
+    );
+}
+
+// --- Tests ---
+
+describe('Order Confirmation Route', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    describe('loader', () => {
+        test('returns a promise for order data', async () => {
+            const orderPromise = Promise.resolve(baseOrder);
+            vi.mocked(fetchOrderWithProducts).mockReturnValue({
+                orderDataPromise: orderPromise.then((order) => ({ order, productsById: {} })),
+                orderPromise,
+            });
+
+            // @sfdc-extension-line SFDC_EXT_BOPIS
+            vi.mocked(fetchStoresForOrder).mockResolvedValue(new Map());
+
+            const mockContext = { get: vi.fn(() => undefined) };
+            const result = loader({ context: mockContext, params: { orderNo: 'TEST-ORDER-12345' } } as any);
+
+            expect(result.orderData).toBeInstanceOf(Promise);
+
+            const resolved = await result.orderData;
+            expect(resolved).toHaveProperty('order');
+            expect(resolved).toHaveProperty('productsById');
+        });
+
+        test('calls fetchOrderWithProducts with context and orderNo', () => {
+            const orderPromise = Promise.resolve(baseOrder);
+            vi.mocked(fetchOrderWithProducts).mockReturnValue({
+                orderDataPromise: orderPromise.then((order) => ({ order, productsById: {} })),
+                orderPromise,
+            });
+
+            // @sfdc-extension-line SFDC_EXT_BOPIS
+            vi.mocked(fetchStoresForOrder).mockResolvedValue(new Map());
+
+            const mockContext = { get: vi.fn(() => undefined) };
+            loader({ context: mockContext, params: { orderNo: 'TEST-ORDER-12345' } } as any);
+
+            expect(vi.mocked(fetchOrderWithProducts)).toHaveBeenCalledWith(mockContext, 'TEST-ORDER-12345');
+        });
+
+        // @sfdc-extension-block-start SFDC_EXT_BOPIS
+        test('fetches stores for BOPIS orders', async () => {
+            const orderPromise = Promise.resolve(baseOrder);
+            vi.mocked(fetchOrderWithProducts).mockReturnValue({
+                orderDataPromise: orderPromise.then((order) => ({ order, productsById: {} })),
+                orderPromise,
+            });
+
+            vi.mocked(fetchStoresForOrder).mockResolvedValue(mockStoresByStoreId);
+
+            const mockContext = { get: vi.fn(() => undefined) };
+            const result = loader({ context: mockContext, params: { orderNo: 'TEST-ORDER-12345' } } as any);
+
+            const resolved = await result.orderData;
+            expect(resolved).toHaveProperty('storesByStoreId');
+            expect(vi.mocked(fetchStoresForOrder)).toHaveBeenCalled();
+        });
+        // @sfdc-extension-block-end SFDC_EXT_BOPIS
+    });
+
+    describe('ErrorBoundary', () => {
+        test('renders order-not-found messaging', () => {
+            const Stub = createRoutesStub([
+                {
+                    path: '/order-confirmation/:orderNo',
+                    Component: () => {
+                        throw new Error('Not found');
+                    },
+                    ErrorBoundary,
+                },
+            ]);
+
+            render(
+                <AllProvidersWrapper>
+                    <Stub initialEntries={['/order-confirmation/INVALID']} />
+                </AllProvidersWrapper>
+            );
+
+            expect(screen.getByText(t('checkout:confirmation.orderNotFound'))).toBeInTheDocument();
+            expect(screen.getByText(t('checkout:confirmation.orderNotFoundDescription'))).toBeInTheDocument();
+            expect(screen.getByText(t('checkout:confirmation.actions.continueShopping'))).toBeInTheDocument();
+        });
+    });
+
+    describe('rendering', () => {
+        test('displays order number and customer info', async () => {
+            renderRoute(baseOrder);
+
+            await waitFor(() => {
+                expect(screen.getByTestId('order-number')).toHaveTextContent('TEST-ORDER-12345');
+            });
+        });
+
+        test('displays shipping address and method', async () => {
+            renderRoute(baseOrder);
+
+            await waitFor(() => {
+                expect(screen.getByText('123 Main St')).toBeInTheDocument();
+                expect(screen.getByText('Standard Shipping')).toBeInTheDocument();
+            });
+        });
+
+        test('displays product item name and discounted price', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Checked Silk Tie',
+                        quantity: 1,
+                        basePrice: 19.19,
+                        price: 19.19,
+                        priceAfterItemDiscount: 4.59,
+                        priceAfterOrderDiscount: 4.59,
+                        priceAdjustments: [{ priceAdjustmentId: 'pa1', itemText: '$10 Off Ties', price: -14.6 }],
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                expect(screen.getByText('Checked Silk Tie')).toBeInTheDocument();
+            });
+        });
+
+        test('displays payment card info', async () => {
+            renderRoute(baseOrder);
+
+            await waitFor(() => {
+                expect(screen.getByText('Visa')).toBeInTheDocument();
+            });
+        });
+    });
+
+    describe('promotions display', () => {
+        test('includes item-level price adjustments in promotions total', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                productTotal: 4.59,
+                productSubTotal: 4.59,
+                orderTotal: 10.58,
+                taxTotal: 0.5,
+                shippingTotal: 5.99,
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Checked Silk Tie',
+                        quantity: 1,
+                        basePrice: 19.19,
+                        price: 19.19,
+                        priceAfterItemDiscount: 4.59,
+                        priceAfterOrderDiscount: 4.59,
+                        priceAdjustments: [{ priceAdjustmentId: 'pa1', itemText: '$10 Off Ties', price: -14.6 }],
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                const promotionsLabel = screen.getByText(t('checkout:confirmation.totals.promotions'));
+                const promotionsRow = promotionsLabel.closest('div');
+                const promotionsValue = promotionsRow?.querySelector('span:last-child');
+                expect(promotionsValue?.textContent).not.toContain('0.00');
+            });
+        });
+
+        test('sums both order-level and item-level adjustments', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                productTotal: 30.0,
+                orderTotal: 50.0,
+                taxTotal: 5.0,
+                shippingTotal: 10.0,
+                orderPriceAdjustments: [{ priceAdjustmentId: 'opa1', itemText: '10% Off Order', price: -5.0 }],
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Tie',
+                        quantity: 1,
+                        basePrice: 50.0,
+                        price: 50.0,
+                        priceAfterItemDiscount: 40.0,
+                        priceAdjustments: [{ priceAdjustmentId: 'pa1', itemText: '$10 Off Ties', price: -10.0 }],
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                const promotionsLabel = screen.getByText(t('checkout:confirmation.totals.promotions'));
+                const promotionsRow = promotionsLabel.closest('div');
+                const promotionsValue = promotionsRow?.querySelector('span:last-child');
+                // -5 + -10 = -15, should not be 0
+                expect(promotionsValue?.textContent).not.toContain('0.00');
+            });
+        });
+
+        test('shows zero promotions when no adjustments exist', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                orderPriceAdjustments: undefined,
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Belt',
+                        quantity: 1,
+                        basePrice: 50.0,
+                        price: 50.0,
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                const promotionsLabel = screen.getByText(t('checkout:confirmation.totals.promotions'));
+                const promotionsRow = promotionsLabel.closest('div');
+                const promotionsValue = promotionsRow?.querySelector('span:last-child');
+                expect(promotionsValue?.textContent).toContain('0.00');
+            });
+        });
+
+        test('applies green styling to non-zero promotions', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Tie',
+                        quantity: 1,
+                        basePrice: 50.0,
+                        price: 50.0,
+                        priceAfterItemDiscount: 40.0,
+                        priceAdjustments: [{ priceAdjustmentId: 'pa1', itemText: 'Sale', price: -10.0 }],
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                const promotionsLabel = screen.getByText(t('checkout:confirmation.totals.promotions'));
+                const promotionsRow = promotionsLabel.closest('div');
+                const promotionsValue = promotionsRow?.querySelector('span:last-child');
+                expect(promotionsValue).toHaveClass('text-green-600');
+            });
+        });
+
+        test('shows original price with strikethrough when item has discount', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                productItems: [
+                    {
+                        itemId: 'item1',
+                        productId: 'product1',
+                        productName: 'Checked Silk Tie',
+                        quantity: 1,
+                        basePrice: 19.19,
+                        price: 19.19,
+                        priceAfterItemDiscount: 4.59,
+                        priceAfterOrderDiscount: 4.59,
+                        priceAdjustments: [{ priceAdjustmentId: 'pa1', itemText: '$10 Off Ties', price: -14.6 }],
+                    },
+                ],
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                const strikethroughEl = document.querySelector('.line-through');
+                expect(strikethroughEl).toBeInTheDocument();
+            });
+        });
+    });
+
+    describe('totals row', () => {
+        test('displays subtotal, shipping, tax, and total', async () => {
+            renderRoute(baseOrder);
+
+            await waitFor(() => {
+                expect(screen.getByText(t('checkout:confirmation.totals.subtotal'))).toBeInTheDocument();
+                expect(screen.getByText(t('checkout:confirmation.totals.shipping'))).toBeInTheDocument();
+                expect(screen.getByText(t('checkout:confirmation.totals.tax'))).toBeInTheDocument();
+                expect(screen.getByText(t('checkout:confirmation.totals.total'))).toBeInTheDocument();
+            });
+        });
+
+        test('shows free shipping label when shipping is zero', async () => {
+            const order: ShopperOrders.schemas['Order'] = {
+                ...baseOrder,
+                shippingTotal: 0,
+            };
+
+            renderRoute(order);
+
+            await waitFor(() => {
+                expect(screen.getByText(t('checkout:confirmation.summaryLabels.freeShipping'))).toBeInTheDocument();
+            });
+        });
+    });
+});

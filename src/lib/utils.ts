@@ -1,0 +1,358 @@
+/**
+ * Copyright 2026 Salesforce, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import type { Json } from '+types/lang';
+import { ApiError } from '@/scapi';
+
+/**
+ * Get the configurable base path for the application.
+ * This is a runtime-safe version that works in both client and server without importing dev tooling.
+ *
+ * @returns The base path (e.g., '/site-a') or empty string
+ */
+export function getBasePath(): string {
+    // Server-side: read from process.env
+    if (typeof window === 'undefined') {
+        const basePath = process.env.MRT_ENV_BASE_PATH?.trim();
+        if (!basePath) return '';
+
+        // Base Path conditions match those imposed by MRT
+        if (!/^\/[a-zA-Z0-9_.+$~"'@:-]{1,63}$/.test(basePath)) {
+            throw new Error(
+                `Invalid base path: "${basePath}". ` +
+                    "Base path must be a single segment starting with '/' (e.g., '/site-a'), " +
+                    'contain only URL-safe characters, and be at most 63 characters after the leading slash.'
+            );
+        }
+
+        return basePath;
+    }
+
+    // Client-side: extract from bundle path
+    // In production, the bundle path already includes the base path
+    if (window._BASE_PATH) {
+        return window._BASE_PATH;
+    }
+
+    // Fallback: no base path
+    return '';
+}
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
+
+export const stringToBase64 =
+    typeof window === 'object' && typeof window.document === 'object'
+        ? (unencoded: string): string => btoa(unencoded)
+        : (unencoded: string): string => Buffer.from(unencoded).toString('base64');
+
+export const validatePassword = (password: string) => ({
+    minLength: password.length >= 8,
+    hasUppercase: /[A-Z]/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasNumber: /\d/.test(password),
+    hasSpecialChar: /[,!%#@$&*()_+\-=[\]{};':"\\|.<>/?]/.test(password),
+});
+
+export const isPasswordValid = (password: string) => {
+    const validation = validatePassword(password);
+    return Object.values(validation).every(Boolean);
+};
+
+/**
+ * This method extracts the status and message from a ResponseError that is returned
+ * by the SCAPI client.
+ *
+ * The SCAPI client throws an `ApiError` (exported from @salesforce/storefront-next-runtime/scapi).
+ * We check for the `response` property and assume it is a ResponseError if present.
+ *
+ * @throws error if the error is not a ResponseError
+ */
+export const extractResponseError = async (
+    error: unknown
+): Promise<{
+    status_code: string | undefined;
+    type?: string | undefined;
+    responseMessage: string | undefined;
+    [key: string]: Json | undefined;
+}> => {
+    // the regular error.message will return only the generic status code message
+    // i.e. 'Bad Request' for 400. We need to drill specifically into the ResponseError
+    // to get a more descriptive error message from SLAS
+    if (error instanceof Error && 'response' in error) {
+        const json = (await (error.response as Response).json()) ?? {};
+        const { type, status_code, ...rest } = json;
+
+        // Extract error message from various possible fields in the API response
+        // Salesforce Commerce Cloud API can return error details in different fields
+        const responseMessage = (json.message || json.detail || json.title || error.message) as string;
+
+        return {
+            status_code,
+            type,
+            // If we have a structured error with title and detail, combine them for better UX
+            responseMessage:
+                json.title && json.detail && json.title !== json.detail
+                    ? `${json.title}: ${json.detail}`
+                    : responseMessage,
+            ...rest,
+        };
+    }
+    throw error;
+};
+
+/**
+ * Type for Commerce SDK error objects that may have status or response properties
+ */
+interface CommerceSdkError extends Error {
+    status?: number | string;
+    response?: {
+        status?: number | string;
+        [key: string]: unknown;
+    };
+}
+
+/**
+ * Type guard to check if an error has status information
+ */
+function hasStatus(error: unknown): error is CommerceSdkError {
+    return (
+        typeof error === 'object' &&
+        error !== null &&
+        ('status' in error || ('response' in error && typeof (error as CommerceSdkError).response === 'object'))
+    );
+}
+
+/**
+ * Extract status code from an error object, handling both direct status and nested response.status
+ * This is a fallback when extractResponseError fails to read the response body
+ */
+export function extractStatusCode(error: unknown): string | undefined {
+    if (!hasStatus(error)) {
+        return undefined;
+    }
+    if (typeof error.status === 'number' || typeof error.status === 'string') {
+        return String(error.status);
+    }
+    if (error.response && typeof error.response === 'object' && 'status' in error.response) {
+        const responseStatus = error.response.status;
+        if (typeof responseStatus === 'number' || typeof responseStatus === 'string') {
+            return String(responseStatus);
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Extracts error message from different error types
+ * @param error - The error to extract message from
+ * @returns A user-friendly error message
+ */
+export function getErrorMessage(error: unknown): string {
+    if (error instanceof ApiError) {
+        // Try to parse rawBody JSON string first
+        if (error.rawBody) {
+            try {
+                const parsedBody = JSON.parse(error.rawBody);
+                if (parsedBody.message) {
+                    return parsedBody.message;
+                }
+            } catch {
+                // Failed to parse, fall through to other options
+            }
+        }
+        // Fall back to body.detail or statusText
+        return error.body?.detail || error.statusText || 'An error occurred';
+    }
+
+    if (error instanceof Error) {
+        return error.message;
+    }
+
+    return 'An error occurred';
+}
+
+/**
+ * Get the SCAPI base URL for server-side requests.
+ * Uses SCAPI_PROXY_HOST if set, otherwise constructs from the given shortCode.
+ *
+ * Server-only — accesses process.env.
+ *
+ * @param shortCode - Commerce API short code (e.g., 'kv7kzm78')
+ * @returns Base URL like 'https://kv7kzm78.api.commercecloud.salesforce.com' or the proxy host
+ */
+export const getScapiBaseUrl = (shortCode: string): string =>
+    process.env.SCAPI_PROXY_HOST || `https://${shortCode}.api.commercecloud.salesforce.com`;
+
+/**
+ * Determines whether the specified URL is absolute.
+ *
+ * @param url The URL to test
+ * @returns True if the specified URL is absolute, otherwise false
+ */
+export const isAbsoluteURL = (url: string): boolean => /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+
+/**
+ * Returns the URL if it is a safe relative path, otherwise returns the fallback.
+ * Prevents open redirect attacks by rejecting absolute URLs (e.g. https://evil.com, //evil.com).
+ */
+export const getSafeReturnUrl = (url: string | null | undefined, fallback = '/'): string => {
+    if (!url) return fallback;
+    if (isAbsoluteURL(url)) return fallback;
+    return url;
+};
+
+/**
+ * Check if code is running on the server side
+ */
+export const isServer = () => typeof window === 'undefined';
+
+/**
+ * Retrieves an item from session storage and parses it as JSON
+ * @param key - The session storage key
+ * @returns The parsed JSON value or undefined if not found or on server
+ */
+export const getSessionJSONItem = <T = unknown>(key: string): T | undefined => {
+    if (isServer()) {
+        return undefined;
+    }
+    try {
+        const item = window.sessionStorage.getItem(key);
+        if (item) {
+            return JSON.parse(item) as T;
+        }
+    } catch {
+        // Failed to parse, ignore silently
+    }
+    return undefined;
+};
+
+/**
+ * Sets an item in session storage as a JSON string
+ * @param key - The session storage key
+ * @param value - The value to stringify and store
+ */
+export const setSessionJSONItem = <T = unknown>(key: string, value: T): void => {
+    if (isServer()) {
+        return;
+    }
+    try {
+        window.sessionStorage.setItem(key, JSON.stringify(value));
+    } catch {
+        // Failed to save, ignore silently
+    }
+};
+
+export const clearSessionJSONItem = (key: string): void => {
+    if (isServer()) {
+        return;
+    }
+    try {
+        window.sessionStorage.removeItem(key);
+    } catch {
+        // Failed to remove, ignore silently
+    }
+};
+
+/**
+ * Parse a JSON string into a flat Record<string, string>.
+ * Only includes entries whose values are string or null (number, boolean, objects, arrays are omitted).
+ * Null is coerced to the string "null". Returns {} for invalid JSON or non-objects.
+ *
+ * For now used for strings can be extended to support other types in the future.
+ *
+ * @param value - JSON string, e.g. '{"device":"mobile","src":"124"}', '{"src":"email"}'
+ * @returns Record with string values only
+ */
+export function parseJsonToStringRecord(value: string | null | undefined): Record<string, string> {
+    if (value == null || value === '') return {};
+    try {
+        const parsed = JSON.parse(value);
+        if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return {};
+        const result: Record<string, string> = {};
+        for (const key of Object.keys(parsed)) {
+            const v = (parsed as Record<string, unknown>)[key];
+            if (typeof v === 'string' || v === null) {
+                result[key] = String(v);
+            }
+        }
+        return result;
+    } catch {
+        return {};
+    }
+}
+
+/**
+ * Resolves a local asset URL to work correctly in both local and MRT (Managed Runtime) environments.
+ *
+ * When assets are imported directly (e.g., `import hero from '/images/hero.png'`), Vite handles
+ * the bundle path transformation at build time. However, for dynamic string paths passed as props,
+ * we need to resolve them at runtime.
+ *
+ * This function:
+ * - Returns absolute URLs (http://, https://, data:, //) unchanged
+ * - Returns URLs that already contain the bundle path unchanged (e.g., statically imported images)
+ * - In local dev, returns paths as-is (e.g., '/images/hero.png')
+ * - In MRT, prepends the bundle path (e.g., '/mobify/bundle/60/client/images/hero.png')
+ * - Works isomorphically (client and server)
+ *
+ * @param url The asset URL to resolve (e.g., '/images/hero.png' or 'images/hero.png')
+ * @returns The resolved URL with bundle path for MRT, or the original path for local dev
+ *
+ * @example
+ * // Local dev:
+ * resolveAssetUrl('/images/hero.png') // → '/images/hero.png'
+ * resolveAssetUrl('images/hero.png') // → '/images/hero.png'
+ * // On MRT with BUNDLE_ID=60:
+ * resolveAssetUrl('/images/hero.png') // → '/mobify/bundle/60/client/images/hero.png'
+ * resolveAssetUrl('images/hero.png') // → '/mobify/bundle/60/client/images/hero.png'
+ * // Already transformed (static import):
+ * resolveAssetUrl('/mobify/bundle/60/client/images/hero.png') // → '/mobify/bundle/60/client/images/hero.png'
+ * // External URLs (always unchanged):
+ * resolveAssetUrl('http://example.com/image.jpg') // → 'http://example.com/image.jpg'
+ */
+export const resolveAssetUrl = (url: string): string => {
+    // Return absolute URLs unchanged
+    if (isAbsoluteURL(url) || url.startsWith('data:')) {
+        return url;
+    }
+
+    // If the URL already contains the bundle path, it's already transformed (e.g., from a static import) — return as-is
+    // This is to avoid double transformation of the URL
+    if (url.includes('/mobify/bundle/')) {
+        return url;
+    }
+
+    const basePath = getBasePath();
+
+    // Determine the bundle ID
+    // Falls back to 'local' if _BUNDLE_ID is undefined (e.g., in dev mode where bundle config isn't injected)
+    const bundleId = (typeof window !== 'undefined' ? window._BUNDLE_ID : process.env.BUNDLE_ID) || 'local';
+
+    // In local development, don't prepend bundle path
+    if (bundleId === 'local') {
+        // Ensure the URL starts with a slash for consistency
+        return url.startsWith('/') ? url : `/${url}`;
+    }
+
+    // In MRT, prepend the bundle path with base path
+    const bundlePath = `${basePath}/mobify/bundle/${bundleId}/client/`;
+    const normalizedUrl = url.startsWith('/') ? url.slice(1) : url;
+
+    return `${bundlePath}${normalizedUrl}`;
+};

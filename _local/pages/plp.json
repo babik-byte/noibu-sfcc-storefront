@@ -1,0 +1,21 @@
+{
+  "data": {},
+  "id": "plp",
+  "name": "Product Listing Page",
+  "description": "Search results page with personalized content",
+  "regions": [
+    {
+      "id": "plp-top-full-width",
+      "components": []
+    },
+    {
+      "id": "plp-top-content",
+      "components": []
+    },
+    {
+      "id": "plp-bottom",
+      "components": []
+    }
+  ],
+  "typeId": "plp"
+}

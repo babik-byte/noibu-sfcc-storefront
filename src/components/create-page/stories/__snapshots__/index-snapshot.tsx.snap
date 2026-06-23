@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CreatePage stories snapshot > Default story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="p-6"
+  >
+    <h1
+      class="text-2xl font-bold mb-4"
+    >
+      Example Page
+    </h1>
+    <p
+      class="text-muted-foreground"
+    >
+      This is an example page created with createPage.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`CreatePage stories snapshot > WithCustomFallback story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="p-6"
+  >
+    <h1
+      class="text-2xl font-bold mb-4"
+    >
+      Custom Fallback
+    </h1>
+    <p
+      class="text-muted-foreground"
+    >
+      This page uses a custom fallback component.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`CreatePage stories snapshot > WithPageKey story renders and matches snapshot 1`] = `
+<div>
+  <div
+    class="p-6"
+  >
+    <h1
+      class="text-2xl font-bold mb-4"
+    >
+      Page With Key
+    </h1>
+    <p
+      class="text-muted-foreground"
+    >
+      This page uses a custom page key function.
+    </p>
+  </div>
+</div>
+`;

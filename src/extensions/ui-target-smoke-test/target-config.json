@@ -1,0 +1,838 @@
+{
+    "components": [
+        {
+            "targetId": "orderSummary.tax",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "pdp.loyalty.badge",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.account.orderDetail.lineReview",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "account",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.accountPaymentOptions.payments.savedPaymentMethods",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "accountPaymentOptions",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.bnpl.message",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.giftCards.apply",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.identity.verification",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.loyalty.pointsEarned",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.payments.expressCheckout",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.shipping.deliveryEstimate",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.cart.tax.lineItemMessage",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "cart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.contactInfo",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.contactInfo.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.contactInfo.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.contactInfo.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.createAccount",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.createAccount.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.createAccount.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.expressPayments",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.expressPayments.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.expressPayments.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.expressPayments.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.mainContent.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.mainContent.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.myCart",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.myCart.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.myCart.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.myCart.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.orderSummary",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.orderSummary.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.orderSummary.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.page.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.page.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.billingAddress",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.billingAddress.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.billingAddress.autocomplete",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.billingAddress.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.paymentMethods",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.paymentMethods.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.payment.paymentMethods.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.placeOrder",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.placeOrder.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.placeOrder.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingAddress",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingAddress.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingAddress.autocomplete",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingAddress.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingAddress.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingOptions",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingOptions.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingOptions.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.shippingOptions.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.sidebar.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.checkout.sidebar.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "checkout",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.emailSignUp.consent.marketing",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "emailSignUp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.emailSignUp.consent.tos",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "emailSignUp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.global.cookies.banner",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "global",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.header.before.cart",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "header",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.header.bnpl.banner",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "header",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.header.search.input",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "header",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.miniCart.bnpl.message",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "miniCart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.miniCart.payments.expressCheckout",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "miniCart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.miniCart.shipping.deliveryEstimate",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "miniCart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.miniCart.tax.lineItemMessage",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "miniCart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.address.autocomplete",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.address.validation",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.gdpr.dataRequest",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.gdpr.deleteAccount",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.identity.verification",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.loyalty.summary",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.cancel",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.returns",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.review",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.support",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.tax",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orderDetails.tracking",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.orders.tracking",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.payments.addMethod",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.preferences",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccount.reviews.pending",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccount",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myAccountPaymentMethods.giftCards.manage",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myAccountPaymentMethods",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.myCart.header.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "myCart",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderConfirmation.shipping.tracking",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderConfirmation",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderConfirmation.tax.summary",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderConfirmation",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.adjustments",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.adjustments.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.adjustments.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.giftCards.applied",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.promoCode",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.promoCode.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.promoCode.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.shipping",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.shipping.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.shipping.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.subtotal",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.subtotal.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.subtotal.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.tax",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.tax.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.tax.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.tax.line",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.total",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.total.after",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.orderSummary.total.before",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "orderSummary",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.after.addToCart",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.agent.productHelper",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.bnpl.message",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.collapsibles",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.estimatedDelivery",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.faq",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.loyalty.points",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.payments.expressCheckout",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.products.gallery",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.products.visualization",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.returnsWarranty",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.reviews.qna",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.reviews.rating",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.reviews.section",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.shipping.deliveryEstimate",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.pdp.tax.productMessage",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "pdp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.plp.agent.categoryHelper",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "plp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.plp.search.filters",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "plp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.plp.search.results",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "plp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.plp.search.summary",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "plp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.plp.shipping.deliveryEstimate",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "plp",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.productCard.bnpl.message",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "productCard",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.productCard.loyalty.points",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "productCard",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.productCard.reviews.rating",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "productCard",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.quickAdd.payments.expressCheckout",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "quickAdd",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.address.autocomplete",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.address.validation",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.consent.marketing",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.consent.tos",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.identity.verification",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        },
+        {
+            "targetId": "sfcc.userRegistration.loyalty.enrollment",
+            "path": "extensions/ui-target-smoke-test/components/generic-marker.tsx",
+            "hint": "userRegistration",
+            "order": 999
+        }
+    ]
+}

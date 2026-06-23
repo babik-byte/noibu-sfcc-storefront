@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProductRecommendations stories snapshot > Default story renders and matches snapshot 1`] = `
+<div
+  class="p-8"
+/>
+`;
+
+exports[`ProductRecommendations stories snapshot > Playground story renders and matches snapshot 1`] = `
+<div
+  class="p-8"
+/>
+`;
+
+exports[`ProductRecommendations stories snapshot > WithArgs story renders and matches snapshot 1`] = `
+<div
+  class="p-8"
+/>
+`;
+
+exports[`ProductRecommendations stories snapshot > WithProducts story renders and matches snapshot 1`] = `
+<div
+  class="p-8"
+/>
+`;
+
+exports[`ProductRecommendations stories snapshot > ZoneType story renders and matches snapshot 1`] = `
+<div
+  class="p-8"
+/>
+`;

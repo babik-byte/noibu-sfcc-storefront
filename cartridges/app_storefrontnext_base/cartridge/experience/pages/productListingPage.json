@@ -1,0 +1,24 @@
+{
+    "name": "Product Listing Page",
+    "description": "Product listing page with product listings and personalized content",
+    "arch_type": "headless",
+    "region_definitions": [
+        {
+            "id": "plpTopFullWidth",
+            "name": "Top Full Width Region",
+            "max_components": 5
+        },
+        {
+            "id": "plpTopContent",
+            "name": "Top Content Region",
+            "max_components": 5
+        },
+        {
+            "id": "plpBottom",
+            "name": "Bottom Region",
+            "max_components": 5
+        }
+    ],
+    "supported_aspect_types": ["plp"],
+    "route": "/:siteId/:localeId/category/:categoryId"
+}

@@ -1,0 +1,11 @@
+:root {
+    /* sidebar palette (Figma: colors.light.sidebar) */
+    --sidebar: #FAFAFA;
+    --sidebar-foreground: #3F3F46;
+    --sidebar-primary: #3B82F6;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #ECECEC;
+    --sidebar-accent-foreground: #1E3A8A;
+    --sidebar-border: #FAFAFA;
+    --sidebar-ring: #3D73F2;
+}

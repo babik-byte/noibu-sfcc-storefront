@@ -1,0 +1,14 @@
+{
+    "components": [
+        {
+            "targetId": "sfcc.footer.ourcompany.start",
+            "path": "extensions/store-locator/components/footer/index.tsx",
+            "order": 0
+        },
+        {
+            "targetId": "sfcc.header.before.cart",
+            "path": "extensions/store-locator/components/header/store-locator-badge.tsx",
+            "order": 0
+        }
+    ]
+}

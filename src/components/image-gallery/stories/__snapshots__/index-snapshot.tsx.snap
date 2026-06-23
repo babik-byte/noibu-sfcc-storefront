@@ -1,0 +1,79 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ImageGallery stories snapshot > Default story renders and matches snapshot 1`] = `
+<div
+  class="space-y-4"
+>
+  <div
+    class="relative aspect-square overflow-hidden rounded-none bg-muted"
+  >
+    <div
+      class="w-full h-full object-cover object-center [&_img]:object-contain! [&_img]:h-full! [&_img]:max-w-full! [&_img]:mx-auto!"
+    >
+      <picture>
+        <source
+          media="(min-width: 1536px)"
+          sizes="680px"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=680&q=70&sfrm=jpg 680w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1360&q=70&sfrm=jpg 1360w"
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 1280px)"
+          sizes="50vw"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=768&q=70&sfrm=jpg 768w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1536&q=70&sfrm=jpg 1536w"
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 1024px)"
+          sizes="50vw"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=640&q=70&sfrm=jpg 640w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1280&q=70&sfrm=jpg 1280w"
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 768px)"
+          sizes="100vw"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1024&q=70&sfrm=jpg 1024w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=2048&q=70&sfrm=jpg 2048w"
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 640px)"
+          sizes="100vw"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=768&q=70&sfrm=jpg 768w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1536&q=70&sfrm=jpg 1536w"
+          type="image/webp"
+        />
+        <source
+          sizes="100vw"
+          srcset="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=640&q=70&sfrm=jpg 640w, https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.webp?sw=1280&q=70&sfrm=jpg 1280w"
+          type="image/webp"
+        />
+        <img
+          alt="Laptop Briefcase with wheels (37L), , large"
+          class="object-cover"
+          fetchpriority="auto"
+          loading="lazy"
+          src="https://edge.disstg.commercecloud.salesforce.com/dw/image/v2/ZZRF_001/on/demandware.static/-/Sites-apparel-m-catalog/default/dwbeefee44/images/large/P0048_001.jpg"
+        />
+      </picture>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ImageGallery stories snapshot > Empty story renders and matches snapshot 1`] = `
+<div
+  class="aspect-square bg-muted rounded-none flex items-center justify-center"
+>
+  <div
+    class="text-center text-muted-foreground"
+  >
+    <div
+      class="text-4xl mb-2"
+    >
+      📷
+    </div>
+    <p>
+      No image available
+    </p>
+  </div>
+</div>
+`;
