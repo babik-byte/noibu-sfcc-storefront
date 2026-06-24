@@ -587,7 +587,9 @@ export default defineConfig<Config>(
                     csp: {
                         directives: {
                             ...defaultCspDirectives,
-                            'script-src': [...defaultCspDirectives['script-src']!, 'https://cdn.noibu.com'],
+                            'script-src': [...defaultCspDirectives['script-src']!, 'https://*.noibu.com'],
+                            'connect-src': [...(defaultCspDirectives['connect-src'] ?? []), 'https://*.noibu.com', 'wss://*.noibu.com'],
+                            'worker-src': [...(defaultCspDirectives['worker-src'] ?? []), 'https://*.noibu.com', 'wss://*.noibu.com'],
                         },
                         reportOnly: false,
                     },
