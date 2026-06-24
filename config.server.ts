@@ -16,6 +16,7 @@
 // Relative paths required here — this file is evaluated by vite-node during
 // react-router typegen (via routes.ts), before Vite aliases are resolved.
 import { defineConfig, defaultSecurityHeaders } from '@salesforce/storefront-next-runtime/config';
+import { defaultCspDirectives } from '@salesforce/storefront-next-runtime/security';
 import type { Config } from './src/types/config';
 import { TrackingConsent } from './src/types/tracking-consent';
 
@@ -581,7 +582,16 @@ export default defineConfig<Config>(
                 //   },
                 //
                 // See docs/README-SECURITY-HEADERS.md for the defaults table and recipes.
-                headers: defaultSecurityHeaders,
+                headers: {
+                    ...defaultSecurityHeaders,
+                    csp: {
+                        directives: {
+                            ...defaultCspDirectives,
+                            'script-src': [...defaultCspDirectives['script-src']!, 'https://cdn.noibu.com'],
+                        },
+                        reportOnly: false,
+                    },
+                },
             },
         },
     },
