@@ -10,7 +10,8 @@ type NoibuProduct = { id?: string; title?: string };
 type NoibuProductVariant = { id?: string; sku?: string; title?: string; price?: NoibuMoney; product?: NoibuProduct };
 type NoibuCartLine = { merchandise?: NoibuProductVariant; quantity?: number; cost?: { totalAmount?: NoibuMoney } };
 type NoibuCheckoutLineItem = { id?: string; quantity?: number; finalLinePrice?: NoibuMoney; variant?: NoibuProductVariant };
-type NoibuCheckout = { currencyCode?: string; subtotalPrice?: NoibuMoney; totalPrice?: NoibuMoney; lineItems?: NoibuCheckoutLineItem[] };
+type NoibuOrder = { id?: string };
+type NoibuCheckout = { order?: NoibuOrder; currencyCode?: string; subtotalPrice?: NoibuMoney; totalPrice?: NoibuMoney; lineItems?: NoibuCheckoutLineItem[] };
 type NoibuSearchResult = { query?: string; productVariants?: NoibuProductVariant[] };
 type NoibuCollection = { id?: string; title?: string; productVariants?: NoibuProductVariant[] };
 
@@ -38,6 +39,9 @@ type NoibuWindow = Window & {
 export type NoibuAdapterConfig = {
     consentCategory?: ConsentCategory;
 };
+
+// Holds basket snapshot from PLACE_ORDER; consumed when the order confirmation page fires view_page
+let pendingCheckout: NoibuCheckout | null = null;
 
 const STEP_TO_NOIBU_EVENT: Record<string, NoibuEventName | undefined> = {
     SHIPPING_ADDRESS: 'checkout_contact_info_submitted',
@@ -150,13 +154,24 @@ export function createNoibuAdapter(config: NoibuAdapterConfig): EngagementAdapte
                     });
                     break;
 
+                case 'view_page': {
+                    const match = /\/order-confirmation\/([^/?#]+)/.exec(event.path);
+                    if (match && pendingCheckout) {
+                        sendToNoibu('checkout_completed', {
+                            checkout: { ...(pendingCheckout ?? {}), order: { id: match[1] } },
+                        });
+                        pendingCheckout = null;
+                    }
+                    break;
+                }
+
                 case 'checkout_step': {
                     const noibuEvent = STEP_TO_NOIBU_EVENT[event.stepName];
                     if (noibuEvent) {
                         const checkout = convertToCheckout(event.basket);
                         sendToNoibu(noibuEvent, { checkout });
                         if (event.stepName === 'PLACE_ORDER') {
-                            sendToNoibu('checkout_completed', { checkout });
+                            pendingCheckout = checkout;
                         }
                     }
                     break;

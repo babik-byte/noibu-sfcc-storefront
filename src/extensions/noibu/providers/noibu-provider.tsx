@@ -13,6 +13,7 @@ export interface NoibuProviderProps {
  */
 export default function NoibuProvider({ children }: NoibuProviderProps): ReactElement {
     useEffect(() => {
+        localStorage.setItem('n_platform', '1');
         addAdapter(NOIBU_ADAPTER_NAME, createNoibuAdapter({}));
     }, []);
 
