@@ -202,3 +202,65 @@ describe('sendToNoibu', () => {
         warnSpy.mockRestore();
     });
 });
+
+describe('pendingCheckout lifecycle', () => {
+    const basket = {
+        currency: 'USD',
+        productSubTotal: 50,
+        orderTotal: 55,
+        productItems: [{ itemId: 'i1', productId: 'p1', quantity: 1, price: 50, product: { name: 'Hat' } }],
+    };
+
+    function placeOrderStep() {
+        return adapter.sendEvent!(
+            { eventType: 'checkout_step', stepName: 'PLACE_ORDER', stepNumber: 5, basket } as any,
+            undefined,
+            CONSENT,
+        );
+    }
+
+    function viewPage(path: string) {
+        return adapter.sendEvent!({ eventType: 'view_page', path } as any, undefined, CONSENT);
+    }
+
+    function completedEvents() {
+        return mockTrack.mock.calls.filter(([name]) => name === 'checkout_completed');
+    }
+
+    it('sends checkout_completed with the order id on the confirmation page after PLACE_ORDER', async () => {
+        await placeOrderStep();
+        await viewPage('/order-confirmation/ORD-1');
+        const completed = completedEvents();
+        expect(completed).toHaveLength(1);
+        expect(completed[0][1].checkout.order.id).toBe('ORD-1');
+        expect(completed[0][1].checkout.totalPrice.amount).toBe(55);
+    });
+
+    it('keeps the snapshot across checkout page views (tracker re-fires /checkout after place-order revalidation)', async () => {
+        await placeOrderStep();
+        await viewPage('/site4/en-US/checkout');
+        await viewPage('/site4/en-US/order-confirmation/ORD-1B');
+        const completed = completedEvents();
+        expect(completed).toHaveLength(1);
+        expect(completed[0][1].checkout.order.id).toBe('ORD-1B');
+    });
+
+    it('discards the snapshot when the shopper leaves checkout after PLACE_ORDER', async () => {
+        await placeOrderStep();
+        await viewPage('/cart');
+        await viewPage('/order-confirmation/ORD-OLD');
+        expect(completedEvents()).toHaveLength(0);
+    });
+
+    it('does not fire on a direct confirmation-page visit with no pending order', async () => {
+        await viewPage('/order-confirmation/ORD-STRAY');
+        expect(completedEvents()).toHaveLength(0);
+    });
+
+    it('does not reuse a consumed snapshot on a second confirmation view', async () => {
+        await placeOrderStep();
+        await viewPage('/order-confirmation/ORD-2');
+        await viewPage('/order-confirmation/ORD-2');
+        expect(completedEvents()).toHaveLength(1);
+    });
+});

@@ -43,7 +43,8 @@ type NoibuWindow = Window & {
 // no per-event consent check is needed here.
 export type NoibuAdapterConfig = Record<string, never>;
 
-// Holds basket snapshot from PLACE_ORDER; consumed when the order confirmation page fires view_page
+// Holds basket snapshot from PLACE_ORDER; consumed when the order confirmation page fires
+// view_page, discarded on any other navigation (order failed or abandoned).
 let pendingCheckout: NoibuCheckout | null = null;
 
 // The storefront fires `checkout_step` when a step STARTS, while Noibu events mark the
@@ -167,10 +168,19 @@ export function createNoibuAdapter(_config: NoibuAdapterConfig): EngagementAdapt
 
                 case 'view_page': {
                     const match = /\/order-confirmation\/([^/?#]+)/.exec(event.path);
-                    if (match && pendingCheckout) {
-                        sendToNoibu('checkout_completed', {
-                            checkout: { ...(pendingCheckout ?? {}), order: { id: match[1] } },
-                        });
+                    if (match) {
+                        if (pendingCheckout) {
+                            sendToNoibu('checkout_completed', {
+                                checkout: { ...pendingCheckout, order: { id: match[1] } },
+                            });
+                            pendingCheckout = null;
+                        }
+                    } else if (!/\/checkout(\/|$)/.test(event.path)) {
+                        // Shopper left the checkout flow without reaching the confirmation
+                        // page — the order failed or was abandoned, so drop the snapshot to
+                        // avoid pairing a stale basket with a later, unrelated confirmation.
+                        // Checkout-path views are ignored: the tracker can re-fire for
+                        // /checkout after the place-order action revalidates the session.
                         pendingCheckout = null;
                     }
                     break;
