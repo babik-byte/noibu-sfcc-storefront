@@ -43,6 +43,11 @@ export type NoibuAdapterConfig = Record<string, never>;
 // Holds basket snapshot from PLACE_ORDER; consumed when the order confirmation page fires view_page
 let pendingCheckout: NoibuCheckout | null = null;
 
+// The storefront fires `checkout_step` when a step STARTS, while Noibu events mark the
+// previous step's info being SUBMITTED. Since submitting step N advances to step N+1,
+// each entry maps "step N+1 started" to "step N submitted". CONTACT_INFO is unmapped
+// (checkout entry maps to checkout_started); order completion fires on the
+// order-confirmation page view (see 'view_page' below).
 const STEP_TO_NOIBU_EVENT: Record<string, NoibuEventName | undefined> = {
     SHIPPING_ADDRESS: 'checkout_contact_info_submitted',
     SHIPPING_OPTIONS: 'checkout_address_info_submitted',
