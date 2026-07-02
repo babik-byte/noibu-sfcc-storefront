@@ -148,3 +148,57 @@ describe('convertToCheckout', () => {
         expect(lastCall().payload.checkout.lineItems).toEqual([]);
     });
 });
+
+describe('sendToNoibu', () => {
+    it('queues events fired before the SDK is ready and sends each once on noibuSDKReady', async () => {
+        delete (window as any).NOIBUJS;
+        await adapter.sendEvent!(
+            { eventType: 'view_product', product: { id: 'p1', name: 'Hat', price: 10 } } as any,
+            undefined,
+            CONSENT,
+        );
+        await adapter.sendEvent!(
+            { eventType: 'view_product', product: { id: 'p2', name: 'Cap', price: 12 } } as any,
+            undefined,
+            CONSENT,
+        );
+        expect(mockTrack).not.toHaveBeenCalled();
+
+        (window as any).NOIBUJS = { track: mockTrack };
+        window.dispatchEvent(new Event('noibuSDKReady'));
+        expect(mockTrack).toHaveBeenCalledTimes(2);
+        expect(mockTrack.mock.calls[0][1].productVariant.id).toBe('p1');
+        expect(mockTrack.mock.calls[1][1].productVariant.id).toBe('p2');
+
+        // { once: true } — a second noibuSDKReady must not re-send queued events
+        window.dispatchEvent(new Event('noibuSDKReady'));
+        expect(mockTrack).toHaveBeenCalledTimes(2);
+    });
+
+    it('logs a warning when track() reports failure', async () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+        mockTrack.mockReturnValue({ success: false, errors: ['missing field'] });
+        await adapter.sendEvent!(
+            { eventType: 'view_product', product: { id: 'p1', name: 'Hat', price: 10 } } as any,
+            undefined,
+            CONSENT,
+        );
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringContaining('Noibu rejected an ecommerce event'),
+            expect.stringContaining('missing field'),
+        );
+        warnSpy.mockRestore();
+    });
+
+    it('does not log when track() succeeds', async () => {
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+        mockTrack.mockReturnValue({ success: true, errors: [] });
+        await adapter.sendEvent!(
+            { eventType: 'view_product', product: { id: 'p1', name: 'Hat', price: 10 } } as any,
+            undefined,
+            CONSENT,
+        );
+        expect(warnSpy).not.toHaveBeenCalled();
+        warnSpy.mockRestore();
+    });
+});

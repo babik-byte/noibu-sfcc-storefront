@@ -1,8 +1,11 @@
 import type { AnalyticsEvent, ConsentPreferences, EventSiteInfo } from '@salesforce/storefront-next-runtime/events';
 import type { ShopperBasketsV2, ShopperProducts } from '@salesforce/storefront-next-runtime/scapi';
 import type { EngagementAdapter } from '@/lib/adapters';
+import { createLogger } from '@/lib/logger';
 
 export const NOIBU_ADAPTER_NAME = 'noibu' as const;
+
+const logger = createLogger();
 
 type NoibuMoney = { amount?: number; currencyCode?: string };
 type NoibuProduct = { id?: string; title?: string };
@@ -56,11 +59,16 @@ const STEP_TO_NOIBU_EVENT: Record<string, NoibuEventName | undefined> = {
 };
 
 function sendToNoibu<T extends NoibuEventName>(eventName: T, payload: NoibuEvents[T]): void {
-    const run = () => (window as NoibuWindow).NOIBUJS?.track(eventName, payload);
+    const run = () => {
+        const result = (window as NoibuWindow).NOIBUJS?.track(eventName, payload);
+        if (result && !result.success) {
+            logger.warn('Noibu rejected an ecommerce event', { eventName, errors: result.errors });
+        }
+    };
     if ((window as NoibuWindow).NOIBUJS) {
         run();
     } else {
-        window.addEventListener('noibuSDKReady', run);
+        window.addEventListener('noibuSDKReady', run, { once: true });
     }
 }
 
