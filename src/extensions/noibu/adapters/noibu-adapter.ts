@@ -1,6 +1,5 @@
-import type { AnalyticsEvent, ConsentCategory, ConsentPreferences, EventSiteInfo } from '@salesforce/storefront-next-runtime/events';
+import type { AnalyticsEvent, ConsentPreferences, EventSiteInfo } from '@salesforce/storefront-next-runtime/events';
 import type { ShopperBasketsV2, ShopperProducts } from '@salesforce/storefront-next-runtime/scapi';
-import { hasConsent } from '@/lib/adapters';
 import type { EngagementAdapter } from '@/lib/adapters';
 
 export const NOIBU_ADAPTER_NAME = 'noibu' as const;
@@ -36,9 +35,10 @@ type NoibuWindow = Window & {
     };
 };
 
-export type NoibuAdapterConfig = {
-    consentCategory?: ConsentCategory;
-};
+// Consent is enforced at the provider level: the Noibu script is only injected and this
+// adapter only registered once the shopper grants the 'analytics' consent category, so
+// no per-event consent check is needed here.
+export type NoibuAdapterConfig = Record<string, never>;
 
 // Holds basket snapshot from PLACE_ORDER; consumed when the order confirmation page fires view_page
 let pendingCheckout: NoibuCheckout | null = null;
@@ -94,17 +94,15 @@ function convertToCheckout(basket: ShopperBasketsV2.schemas['Basket']): NoibuChe
     };
 }
 
-export function createNoibuAdapter(config: NoibuAdapterConfig): EngagementAdapter {
+export function createNoibuAdapter(_config: NoibuAdapterConfig): EngagementAdapter {
     return {
         name: NOIBU_ADAPTER_NAME,
 
         sendEvent: async (
             event: AnalyticsEvent,
             _siteInfo?: EventSiteInfo,
-            consentPreferences?: ConsentPreferences,
+            _consentPreferences?: ConsentPreferences,
         ): Promise<void> => {
-            if (!hasConsent(config.consentCategory, consentPreferences)) return;
-
             switch (event.eventType) {
                 case 'view_product':
                     sendToNoibu('product_viewed', {
