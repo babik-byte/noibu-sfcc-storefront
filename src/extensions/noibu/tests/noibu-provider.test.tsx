@@ -80,6 +80,36 @@ describe('NoibuProvider', () => {
         expect(mockAddAdapter).not.toHaveBeenCalled();
     });
 
+    it('does not inject script or register adapter when localStorage is unavailable', () => {
+        mockUseTrackingConsent.mockReturnValue({
+            trackingConsent: TrackingConsent.Accepted,
+            isTrackingConsentEnabled: true,
+        });
+        const originalStorage = window.localStorage;
+        Object.defineProperty(window, 'localStorage', {
+            configurable: true,
+            value: {
+                setItem: () => {
+                    throw new Error('QuotaExceededError');
+                },
+            },
+        });
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+        try {
+            render(
+                <NoibuProvider>
+                    <span />
+                </NoibuProvider>,
+            );
+            expect(noibuScript()).toBeNull();
+            expect(mockAddAdapter).not.toHaveBeenCalled();
+            expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('localStorage is unavailable'));
+        } finally {
+            Object.defineProperty(window, 'localStorage', { configurable: true, value: originalStorage });
+            warnSpy.mockRestore();
+        }
+    });
+
     it('injects script and registers adapter when consent is accepted', () => {
         mockUseTrackingConsent.mockReturnValue({
             trackingConsent: TrackingConsent.Accepted,
