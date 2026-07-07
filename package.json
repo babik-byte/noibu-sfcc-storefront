@@ -18,7 +18,7 @@
         "bundlesize": "cross-env BUNDLES_SIZE_CHECK=true pnpm build",
         "start": "cross-env SFNEXT_DATA_STORE_UNAVAILABLE_MODE=fallback sfnext preview",
         "preview": "pnpm start",
-        "push": "sfnext push --project-directory .",
+        "push": "pnpm build && sfnext push --project-directory . --wait && ./scripts/ensure-sfra-cartridges.sh",
         "typecheck": "react-router typegen && cross-env NODE_OPTIONS=--max-old-space-size=8192 tsc --noEmit",
         "lint": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint . --report-unused-disable-directives --max-warnings 0 --cache && pnpm --filter ./e2e lint",
         "lint:fix": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint . --fix --cache && pnpm --filter ./e2e lint:fix",
