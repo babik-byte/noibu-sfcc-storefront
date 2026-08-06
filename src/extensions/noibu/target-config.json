@@ -1,9 +1,0 @@
-{
-    "components": [],
-    "contextProviders": [
-        {
-            "path": "extensions/noibu/providers/noibu-provider.tsx",
-            "order": 0
-        }
-    ]
-}
