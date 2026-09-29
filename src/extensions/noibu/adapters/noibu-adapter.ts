@@ -59,6 +59,26 @@ const STEP_TO_NOIBU_EVENT: Record<string, NoibuEventName | undefined> = {
     PLACE_ORDER: 'payment_info_submitted',
 };
 
+// Resolves the order id when the given view_page marks a completed order, or null.
+// Two shapes are supported:
+// 1. Dedicated confirmation route (storefront default): the place-order action
+//    redirects to /order-confirmation/<orderNo>.
+// 2. Query-param checkouts (e.g. /checkout?step=complete&orderNo=<orderNo>): the
+//    confirmation is a step on the same pathname. view_page events carry only the
+//    pathname, so the query string is read from the live location instead.
+function extractCompletedOrderId(path: string): string | null {
+    const routeMatch = /\/order-confirmation\/([^/?#]+)/.exec(path);
+    if (routeMatch) return routeMatch[1];
+
+    if (/\/checkout(\/|$)/.test(path) && typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('step') === 'complete') {
+            return params.get('orderNo');
+        }
+    }
+    return null;
+}
+
 function sendToNoibu<T extends NoibuEventName>(eventName: T, payload: NoibuEvents[T]): void {
     const run = () => {
         const result = (window as NoibuWindow).NOIBUJS?.track(eventName, payload);
@@ -167,11 +187,11 @@ export function createNoibuAdapter(_config: NoibuAdapterConfig): EngagementAdapt
                     break;
 
                 case 'view_page': {
-                    const match = /\/order-confirmation\/([^/?#]+)/.exec(event.path);
-                    if (match) {
+                    const orderId = extractCompletedOrderId(event.path);
+                    if (orderId) {
                         if (pendingCheckout) {
                             sendToNoibu('checkout_completed', {
-                                checkout: { ...pendingCheckout, order: { id: match[1] } },
+                                checkout: { ...pendingCheckout, order: { id: orderId } },
                             });
                             pendingCheckout = null;
                         }

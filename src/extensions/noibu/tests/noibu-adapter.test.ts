@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { createNoibuAdapter } from '../adapters/noibu-adapter';
 
 const CONSENT: ['necessary'] = ['necessary'];
@@ -262,5 +262,92 @@ describe('pendingCheckout lifecycle', () => {
         await viewPage('/order-confirmation/ORD-2');
         await viewPage('/order-confirmation/ORD-2');
         expect(completedEvents()).toHaveLength(1);
+    });
+});
+
+// Query-param checkouts complete on the same /checkout pathname (e.g.
+// /checkout?step=complete&orderNo=...); view_page events carry only the
+// pathname, so the adapter reads the query string from the live location.
+describe('pendingCheckout lifecycle (query-param checkout)', () => {
+    const basket = {
+        currency: 'USD',
+        productSubTotal: 50,
+        orderTotal: 55,
+        productItems: [{ itemId: 'i1', productId: 'p1', quantity: 1, price: 50, product: { name: 'Hat' } }],
+    };
+
+    function placeOrderStep() {
+        return adapter.sendEvent!(
+            { eventType: 'checkout_step', stepName: 'PLACE_ORDER', stepNumber: 5, basket } as any,
+            undefined,
+            CONSENT,
+        );
+    }
+
+    function viewPage(path: string) {
+        return adapter.sendEvent!({ eventType: 'view_page', path } as any, undefined, CONSENT);
+    }
+
+    function completedEvents() {
+        return mockTrack.mock.calls.filter(([name]) => name === 'checkout_completed');
+    }
+
+    function setLocation(url: string) {
+        window.history.pushState({}, '', url);
+    }
+
+    afterEach(() => {
+        setLocation('/');
+    });
+
+    it('sends checkout_completed when the checkout page carries step=complete and orderNo', async () => {
+        await placeOrderStep();
+        setLocation('/checkout?step=complete&orderNo=QP-1');
+        await viewPage('/checkout');
+        const completed = completedEvents();
+        expect(completed).toHaveLength(1);
+        expect(completed[0][1].checkout.order.id).toBe('QP-1');
+        expect(completed[0][1].checkout.totalPrice.amount).toBe(55);
+    });
+
+    it('keeps the snapshot across intermediate step views and completes later', async () => {
+        await placeOrderStep();
+        setLocation('/checkout?step=payment');
+        await viewPage('/checkout');
+        expect(completedEvents()).toHaveLength(0);
+
+        setLocation('/checkout?step=complete&orderNo=QP-2');
+        await viewPage('/checkout');
+        const completed = completedEvents();
+        expect(completed).toHaveLength(1);
+        expect(completed[0][1].checkout.order.id).toBe('QP-2');
+    });
+
+    it('does not fire on step=complete without an orderNo', async () => {
+        await placeOrderStep();
+        setLocation('/checkout?step=complete');
+        await viewPage('/checkout');
+        expect(completedEvents()).toHaveLength(0);
+        // snapshot must survive (still on the checkout path)
+        setLocation('/checkout?step=complete&orderNo=QP-3');
+        await viewPage('/checkout');
+        expect(completedEvents()).toHaveLength(1);
+    });
+
+    it('does not fire on a completion URL with no pending order', async () => {
+        setLocation('/checkout?step=complete&orderNo=QP-STRAY');
+        await viewPage('/checkout');
+        expect(completedEvents()).toHaveLength(0);
+    });
+
+    it('ignores the query string on non-checkout paths', async () => {
+        await placeOrderStep();
+        setLocation('/cart?step=complete&orderNo=QP-4');
+        await viewPage('/cart');
+        // leaving the checkout flow discards the snapshot; no completion fires
+        expect(completedEvents()).toHaveLength(0);
+        setLocation('/checkout?step=complete&orderNo=QP-4');
+        await viewPage('/checkout');
+        expect(completedEvents()).toHaveLength(0);
     });
 });
